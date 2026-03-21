@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    
+    <!-- Основные мета-теги -->
+    <title>Таня — Творческое портфолио | Дизайнер, иллюстратор</title>
+    <meta name="description" content="Портфолио Тани — творческого дизайнера. Визитки, логотипы, иллюстрации, открытки, айдентика и многое другое. Закажите уникальный дизайн!">
+    <meta name="keywords" content="портфолио, дизайнер, иллюстратор, визитки, логотипы, открытки, айдентика, Тани">
+    <meta name="author" content="Таня">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph (для соцсетей) -->
+    <meta property="og:title" content="Таня — Творческое портфолио">
+    <meta property="og:description" content="Дизайнерские работы: визитки, логотипы, иллюстрации, открытки и айдентика">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://твой-username.github.io/tanya-portfolio/">
+    <meta property="og:image" content="https://твой-username.github.io/tanya-portfolio/images/avatar.jpg">
+    <meta property="og:image:alt" content="Творческое портфолио Тани">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Таня — Творческое портфолио">
+    <meta name="twitter:description" content="Дизайнерские работы: визитки, логотипы, иллюстрации, открытки и айдентика">
+    <meta name="twitter:image" content="https://твой-username.github.io/tanya-portfolio/images/avatar.jpg">
+    
+    <!-- Favicon для всех устройств -->
+    <link rel="icon" type="image/svg+xml" href="images/favicon/favicon.svg">
+    <link rel="icon" type="image/png" sizes="96x96" href="images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/x-icon" href="images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="images/favicon/site.webmanifest">
+    
+    <!-- Цветовая тема для браузеров -->
+    <meta name="theme-color" content="#e5a4ac">
+    <meta name="msapplication-TileColor" content="#e5a4ac">
+    
+    <!-- Шрифты и стили -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">T<span>a</span>nya<span>.</span></a>
+                <div class="nav-links">
+                    <a href="#about">Oбо мне</a>
+                    <a href="#portfolio">Портфолио</a>
+                    <a href="#form">Связаться</a>
+                    <a href="#contact">Контакты</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- БЛОК ОБО МНЕ -->
+        <section id="about" class="container">
+            <div class="about-section">
+                <div class="about-photo">
+                    <div class="about-photo">
+                        <div class="photo-placeholder with-avatar">
+                        </div>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <h1>Таня <small>(она же)</small></h1>
+                    <p>Лёгкая, весёлая и творческая. Рисую всё, что нельзя потрогать, но можно увидеть: от визиток до целых миров. Обожаю придавать смыслы формам и цветам.</p>
+                    <div class="tags">
+                        <span class="tag">иллюстратор</span>
+                        <span class="tag">графический дизайнер</span>
+                        <span class="tag">душа компании</span>
+                        <span class="tag">немного романтик</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ПОРТФОЛИО -->
+        <section id="portfolio" class="portfolio-section">
+            <div class="container">
+                <h2>Портфолио</h2>
+                <div class="portfolio-tabs">
+                    <button class="tab-btn active" data-tab="all">Bсё</button>
+                    <button class="tab-btn" data-tab="visits">Визитки</button>
+                    <button class="tab-btn" data-tab="logos">Логотипы</button>
+                    <button class="tab-btn" data-tab="infographics">Инфографика</button>
+                    <button class="tab-btn" data-tab="identity">Айдентика</button>
+                </div>
+                <div class="gallery" id="gallery"></div>
+            </div>
+        </section>
+
+        <!-- ФОРМА -->
+        <section id="form" class="form-section">
+            <div class="container form-container">
+                <h2 style="display: block; text-align: center; margin-top: 0;">Напишите мне</h2>
+                <p style="text-align: center; margin-bottom: 30px; color: #a48e86;">Заполните форму, и я отвечу в ближайшее время</p>
+                
+                <form id="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Ваше имя" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phone" name="phone" placeholder="Номер телефона" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" rows="3" placeholder="Сообщение (необязательно)"></textarea>
+                    </div>
+                    <button type="submit">Отправить</button>
+                    <div id="form-status"></div>
+                </form>
+            </div>
+        </section>
+
+        <!-- КОНТАКТЫ -->
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2>Контакты</h2>
+                <div class="contact-links">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:tanya.art@example.com">tanya.art@example.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-telegram"></i>
+                        <a href="https://t.me/tiana_creator">@tiana_creator</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-instagram"></i>
+                        <a href="#">@tanya.draws</a>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <a href="tel:+79870597799">+7 (987) 059-77-99</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© Таня — лёгкое портфолио. Сделано с любовью и розовым настроением.</p>
+    </footer>
+
+    <!-- Подключаем внешний JavaScript -->
+    <script src="script.js"></script>
+
+    <!-- Кнопка "Наверх" -->
+    <button id="backToTop" class="back-to-top" aria-label="Наверх">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+</body>
+</html>
