@@ -513,7 +513,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTabs();
     initContactForm();
     loadWorks();
-    initBackToTop(); // Добавляем инициализацию кнопки
+    initBackToTop();
     
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
@@ -559,7 +559,3 @@ function initBackToTop() {
         });
     });
 }
-
-// Добавь вызов функции в DOMContentLoaded
-// Найди в конце файла document.addEventListener('DOMContentLoaded', ...) 
-// и добавь туда initBackToTop();
