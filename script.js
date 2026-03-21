@@ -487,17 +487,19 @@ function initContactForm() {
         };
         
         try {
-            await fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            });
-            
-            statusDiv.innerHTML = '✅ Заявка отправлена! Таня свяжется с вами в ближайшее время.';
-            form.reset();
-            if (phoneInput) phoneInput.value = '+7';
-            
+        // Отправляем данные, но не ждём ответа (чтобы избежать таймаута)
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        }).catch(e => console.log('Фоновая ошибка:', e));
+        
+        // Сразу показываем успех, так как данные ушли
+        statusDiv.innerHTML = '✅ Заявка отправлена! Таня свяжется с вами в ближайшее время.';
+        form.reset();
+        if (phoneInput) phoneInput.value = '+7';
+        
         } catch (error) {
             console.error('Ошибка:', error);
             statusDiv.innerHTML = '❌ Ошибка отправки. Попробуйте позже или напишите в Telegram: @Tiana_Flowers_Bot';
