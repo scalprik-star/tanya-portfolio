@@ -917,6 +917,7 @@ footer {
     .photo-placeholder {
         width: 160px;
         height: 160px;
+        margin-top: 45px;
     }
 
     .gallery {
