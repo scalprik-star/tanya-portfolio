@@ -198,26 +198,61 @@ function loadDemoData() {
 // ============================================
 
 function renderTabs() {
-    const tabsContainer = document.querySelector('.portfolio-tabs');
-    if (!tabsContainer) return;
+    const filterDropdown = document.getElementById('filterDropdown');
+    if (!filterDropdown) return;
     
     const sortedCategories = Object.entries(CONFIG.categories).sort((a, b) => a[1].order - b[1].order);
     
-    let html = '<button class="tab-btn active" data-tab="all">Всё (0)</button>';
+    let html = '<button class="tab-btn active" data-tab="all">Все работы</button>';
     
     for (const [key, value] of sortedCategories) {
-        html += `<button class="tab-btn" data-tab="${key}">${value.name} (0)</button>`;
+        html += `<button class="tab-btn" data-tab="${key}">${value.name}</button>`;
     }
     
-    tabsContainer.innerHTML = html;
+    filterDropdown.innerHTML = html;
     
+    // Навешиваем обработчики
     document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const category = btn.dataset.tab;
+            const categoryName = btn.textContent;
+            
+            // Обновляем активный класс
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            displayWorks(btn.dataset.tab);
+            
+            // Обновляем текст на кнопке фильтра
+            const selectedSpan = document.getElementById('selectedCategory');
+            if (selectedSpan) {
+                selectedSpan.textContent = categoryName;
+            }
+            
+            // Закрываем дропдаун
+            toggleDropdown(false);
+            
+            // Отображаем выбранную категорию
+            displayWorks(category);
         });
     });
+}
+
+// Функция для открытия/закрытия дропдауна
+function toggleDropdown(show) {
+    const dropdown = document.getElementById('filterDropdown');
+    const filterBtn = document.getElementById('filterBtn');
+    if (!dropdown || !filterBtn) return;
+    
+    if (show === undefined) {
+        dropdown.classList.toggle('show');
+        filterBtn.classList.toggle('active');
+    } else if (show) {
+        dropdown.classList.add('show');
+        filterBtn.classList.add('active');
+    } else {
+        dropdown.classList.remove('show');
+        filterBtn.classList.remove('active');
+    }
 }
 
 // ============================================
@@ -225,6 +260,17 @@ function renderTabs() {
 // ============================================
 
 function displayWorks(category) {
+    // Обновляем текст на кнопке фильтра
+    const selectedSpan = document.getElementById('selectedCategory');
+    if (selectedSpan && category !== 'all') {
+        const activeBtn = document.querySelector(`.tab-btn[data-tab="${category}"]`);
+        if (activeBtn) {
+            selectedSpan.textContent = activeBtn.textContent;
+        }
+    } else if (selectedSpan && category === 'all') {
+        selectedSpan.textContent = 'Все работы';
+    }
+
     const gallery = document.getElementById('gallery');
     if (!gallery) return;
     
@@ -290,7 +336,7 @@ function updateCategoryCounts() {
     tabs.forEach(tab => {
         const category = tab.dataset.tab;
         if (category === 'all') {
-            tab.textContent = `Всё (${allWorks.length})`;
+            tab.textContent = `Все работы (${allWorks.length})`;
         } else if (CONFIG.categories[category]) {
             const count = allWorks.filter(w => w.category === category).length;
             tab.textContent = `${CONFIG.categories[category].name} (${count})`;
@@ -486,7 +532,6 @@ function initContactForm() {
             secret: 'Tanya2024SecureKey!@#'
         };
         
-        try {
         // Отправляем данные, но не ждём ответа (чтобы избежать таймаута)
         fetch(GOOGLE_SCRIPT_URL, {
             method: 'POST',
@@ -499,10 +544,60 @@ function initContactForm() {
         statusDiv.innerHTML = '✅ Заявка отправлена! Таня свяжется с вами в ближайшее время.';
         form.reset();
         if (phoneInput) phoneInput.value = '+7';
-        
-        } catch (error) {
-            console.error('Ошибка:', error);
-            statusDiv.innerHTML = '❌ Ошибка отправки. Попробуйте позже или напишите в Telegram: @Tiana_Flowers_Bot';
+    });
+}
+
+// ============================================
+// КНОПКА "НАВЕРХ"
+// ============================================
+
+function initBackToTop() {
+    const backToTopBtn = document.getElementById('backToTop');
+    if (!backToTopBtn) return;
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+    
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+
+// ============================================
+// Закрытие дропдауна при клике вне меню
+// ============================================
+
+document.addEventListener('click', function(e) {
+    const container = document.querySelector('.filter-container');
+    if (!container) return;
+    
+    if (!container.contains(e.target)) {
+        toggleDropdown(false);
+    }
+});
+
+// ============================================
+// ЭФФЕКТЫ ДЛЯ ЛИПКОГО МЕНЮ
+// ============================================
+
+function initStickyHeader() {
+    const header = document.querySelector('header');
+    if (!header) return;
+    
+    // Добавляем класс при скролле больше 50px
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.classList.add('sticky-shadow');
+            // Раскомментируй следующую строку, если хочешь сжатие
+            // header.classList.add('sticky-shrink');
+        } else {
+            header.classList.remove('sticky-shadow');
+            // header.classList.remove('sticky-shrink');
         }
     });
 }
@@ -516,48 +611,28 @@ document.addEventListener('DOMContentLoaded', () => {
     initContactForm();
     loadWorks();
     initBackToTop();
+    initStickyHeader();
     
+    const filterBtn = document.getElementById('filterBtn');
+    if (filterBtn) {
+        filterBtn.addEventListener('click', () => toggleDropdown());
+    }
+
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        const href = this.getAttribute('href');
-        
-        if (href === '#' || href === '' || href === '#/') {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            return;
-        }
-        
-        const target = document.querySelector(href);
-        if (target) {
-            e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth' });
-        }
-    });
-});
-});
-
-// ============================================
-// КНОПКА "НАВЕРХ"
-// ============================================
-
-function initBackToTop() {
-    const backToTopBtn = document.getElementById('backToTop');
-    if (!backToTopBtn) return;
-    
-    // Показываем кнопку после прокрутки 300px
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-            backToTopBtn.classList.add('show');
-        } else {
-            backToTopBtn.classList.remove('show');
-        }
-    });
-    
-    // Прокрутка наверх при клике
-    backToTopBtn.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            
+            if (href === '#' || href === '' || href === '#/') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+            
+            const target = document.querySelector(href);
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
         });
     });
-}
+});

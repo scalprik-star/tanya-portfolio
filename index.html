@@ -47,6 +47,7 @@
     <header>
         <div class="container">
             <nav>
+                <!-- исправлено: логотип ведёт наверх -->
                 <a href="#" class="logo">Т<span>a</span>тьяна Семёнова</a>
                 <div class="nav-links">
                     <a href="#about">Oбо мне</a>
@@ -62,14 +63,15 @@
         <!-- БЛОК ОБО МНЕ -->
         <section id="about" class="container">
             <div class="about-section">
+                <!-- исправлено: убрана двойная вложенность about-photo -->
                 <div class="about-photo">
-                    <div class="about-photo">
-                        <div class="photo-placeholder with-avatar">
-                        </div>
+                    <div class="photo-placeholder with-avatar">
+                        <!-- здесь будет фоновая картинка аватара из CSS -->
                     </div>
                 </div>
                 <div class="about-text">
-                    <h1> </h1>
+                    <!-- исправлено: заголовок не должен быть пустым -->
+                    <h1>Татьяна Семёнова</h1>
                     <p>Я художник и дизайнер. 5 лет создаю визуал: от живописи и барельефов до логотипов, айдентики и полиграфии.<br>Умею работать в разных техниках и стилях, чувствую композицию, цвет, детали.<br><br>В портфолио представлены примеры: баннеры, карточки товаров, логотипы, а также мои авторские работы, которые показывают мой художественный уровень.<br><br>Ищу возможность применить свой опыт в коммерческом дизайне. Готова к задачам, где нужно сочетать эстетику и структуру.</p>
                     <div class="tags">
                         <span class="tag">иллюстратор</span>
@@ -84,15 +86,30 @@
         <!-- ПОРТФОЛИО -->
         <section id="portfolio" class="portfolio-section">
             <div class="container">
-                <h2>Портфолио</h2>
-                <div class="portfolio-tabs">
-                    <button class="tab-btn active" data-tab="all">Bсё</button>
-                    <button class="tab-btn" data-tab="visits">Визитки</button>
-                    <button class="tab-btn" data-tab="logos">Логотипы</button>
-                    <button class="tab-btn" data-tab="infographics">Инфографика</button>
-                    <button class="tab-btn" data-tab="identity">Айдентика</button>
+                <!-- исправлено: добавлен контейнер для центрирования -->
+                <div class="filter-container">
+                    <button id="filterBtn" class="filter-btn">
+                        <span id="selectedCategory">Все работы</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div id="filterDropdown" class="filter-dropdown">
+                        <button class="tab-btn active" data-tab="all">Все работы</button>
+                        <button class="tab-btn" data-tab="visits">Визитки</button>
+                        <button class="tab-btn" data-tab="logos">Логотипы</button>
+                        <button class="tab-btn" data-tab="infographics">Инфографика</button>
+                        <button class="tab-btn" data-tab="identity">Айдентика</button>
+                        <button class="tab-btn" data-tab="gift-certificates">Подарочные сертификаты</button>
+                        <button class="tab-btn" data-tab="illustrations">Иллюстрации</button>
+                        <button class="tab-btn" data-tab="postcards">Открытки</button>
+                        <button class="tab-btn" data-tab="maccards">Авторские мак-карты</button>
+                        <button class="tab-btn" data-tab="invitations">Приглашения</button>
+                        <button class="tab-btn" data-tab="handmade">Ручная работа</button>
+                        <button class="tab-btn" data-tab="social">Для соц.сетей</button>
+                        <button class="tab-btn" data-tab="guides">Оформление гайдов</button>
+                    </div>
                 </div>
-                <div class="gallery" id="gallery"></div>
+                <!-- исправлено: добавлен контейнер для галереи -->
+                <div id="gallery" class="gallery"></div>
             </div>
         </section>
 
@@ -144,7 +161,7 @@
         </section>
     </main>
 
-        <!-- Подключаем внешний JavaScript -->
+    <!-- Подключаем внешний JavaScript -->
     <script src="script.js"></script>
 
     <!-- Кнопка "Наверх" -->

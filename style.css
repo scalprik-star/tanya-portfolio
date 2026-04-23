@@ -24,6 +24,8 @@ body {
     overflow-x: hidden;
     width: 100%;
     position: relative;
+    /* Компенсируем высоту фиксированного меню */
+    padding-top: 90px;
 }
 
 h1, h2, h3, .logo {
@@ -56,10 +58,30 @@ h2:after {
     padding: 0 20px;
 }
 
-/* ШАПКА */
+/* ============================================ */
+/* ШАПКА — ФИКСИРОВАННАЯ (ВСЕГДА НАВЕРХУ) */
+/* ============================================ */
+
 header {
-    padding: 30px 0 20px;
-    background-color: transparent;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 9999 !important;
+    background: rgba(250, 247, 242, 0.85) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    padding: 20px 0 !important;
+    transition: all 0.3s ease !important;
+    border-bottom: 1px solid rgba(229, 164, 172, 0.2) !important;
+    width: 100% !important;
+}
+
+/* Усиление при скролле */
+header.scrolled {
+    background: rgba(250, 247, 242, 0.95) !important;
+    padding: 12px 0 !important;
+    border-bottom-color: rgba(229, 164, 172, 0.5) !important;
 }
 
 nav {
@@ -102,7 +124,10 @@ nav {
     border-bottom-color: #f5a3b5;
 }
 
+/* ============================================ */
 /* ОБО МНЕ */
+/* ============================================ */
+
 .about-section {
     padding: 60px 0 40px;
     display: flex;
@@ -128,6 +153,7 @@ nav {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-image: url('images/avatar.jpg');
 }
 
 .about-text {
@@ -136,17 +162,7 @@ nav {
 }
 
 .about-text h1 {
-    font-size: 3.2rem;
-    font-weight: 400;
-    color: #e3a5aa;
-    margin-bottom: 10px;
-}
-
-.about-text h1 small {
-    font-size: 1.6rem;
-    color: #a28f88;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
+    display: none;
 }
 
 .about-text p {
@@ -172,37 +188,13 @@ nav {
     border: 1px solid #f0d5cf;
 }
 
+/* ============================================ */
 /* ПОРТФОЛИО */
+/* ============================================ */
+
 .portfolio-section {
     padding: 60px 0;
     background-color: rgba(255, 255, 255, 0.5);
-}
-
-.portfolio-tabs {
-    display: flex;
-    gap: 25px;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-    justify-content: center;
-}
-
-.tab-btn {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: #887b76;
-    cursor: pointer;
-    padding: 8px 5px;
-    border-bottom: 2px solid transparent;
-    transition: 0.3s;
-    font-family: 'Playfair Display', serif;
-}
-
-.tab-btn:hover,
-.tab-btn.active {
-    color: #e5989e;
-    border-bottom-color: #f5a3b5;
 }
 
 /* ГАЛЕРЕЯ */
@@ -281,9 +273,7 @@ nav {
 }
 
 .work-title {
-    font-weight: 500;
-    color: #6e5b54;
-    margin-bottom: 5px;
+    display: none;
 }
 
 .work-category {
@@ -293,7 +283,10 @@ nav {
     letter-spacing: 0.5px;
 }
 
+/* ============================================ */
 /* КОНТАКТЫ */
+/* ============================================ */
+
 .contact-section {
     padding: 60px 0;
     text-align: center;
@@ -341,7 +334,10 @@ nav {
     border-bottom-color: #e5989e;
 }
 
+/* ============================================ */
 /* ФОРМА */
+/* ============================================ */
+
 .form-section {
     padding: 60px 0 80px;
     background-color: #faf7f2;
@@ -413,12 +409,8 @@ button:hover {
     text-align: center;
 }
 
-/* ФУТЕР */
 footer {
-    text-align: center;
-    padding: 30px;
-    color: #b7a29b;
-    border-top: 1px solid #f0dfd9;
+    display: none;
 }
 
 /* ============================================ */
@@ -563,6 +555,147 @@ footer {
 }
 
 /* ============================================ */
+/* КНОПКА "НАВЕРХ" */
+/* ============================================ */
+
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #e5a4ac;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.back-to-top:hover {
+    background-color: #d48f9b;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-top:active {
+    transform: translateY(0);
+}
+
+/* ============================================ */
+/* КАСТОМНЫЙ ВЫПАДАЮЩИЙ ФИЛЬТР */
+/* ============================================ */
+
+.filter-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 40px;
+    width: 100%;
+    text-align: center;
+}
+
+.filter-btn {
+    background: linear-gradient(135deg, #e5a4ac, #d48f9b);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    font-size: 1.1rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    border-radius: 50px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(229, 164, 172, 0.3);
+}
+
+.filter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(229, 164, 172, 0.4);
+}
+
+.filter-btn i {
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+}
+
+.filter-btn.active i {
+    transform: rotate(180deg);
+}
+
+.filter-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 12px;
+    min-width: 220px;
+    max-height: 300px;
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 100;
+    border: 1px solid #f5e3df;
+}
+
+.filter-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    top: calc(100% + 15px);
+}
+
+.filter-dropdown .tab-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 10px 16px;
+    margin: 4px 0;
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    color: #6b5b55;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.filter-dropdown .tab-btn:hover {
+    background: #faf0ed;
+    color: #e5a4ac;
+}
+
+.filter-dropdown .tab-btn.active {
+    background: #e5a4ac;
+    color: white;
+}
+
+.portfolio-tabs {
+    display: none;
+}
+
+/* ============================================ */
 /* МОБИЛЬНАЯ АДАПТАЦИЯ */
 /* ============================================ */
 
@@ -586,14 +719,11 @@ footer {
 @media (max-width: 768px) {
     body {
         overflow-x: hidden;
+        padding-top: 120px !important;
     }
 
     .container {
         padding: 0 20px;
-    }
-
-    header {
-        padding: 20px 0;
     }
 
     nav {
@@ -638,16 +768,6 @@ footer {
         min-width: auto;
     }
 
-    .about-text h1 {
-        font-size: 2.2rem;
-    }
-
-    .about-text h1 small {
-        font-size: 1.2rem;
-        display: block;
-        margin-top: 5px;
-    }
-
     .about-text p {
         font-size: 1rem;
         margin: 15px auto;
@@ -668,16 +788,6 @@ footer {
         padding: 40px 0;
     }
 
-    .portfolio-tabs {
-        gap: 12px;
-        margin-bottom: 30px;
-    }
-
-    .tab-btn {
-        font-size: 0.9rem;
-        padding: 6px 12px;
-    }
-
     .gallery {
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
         gap: 15px;
@@ -689,10 +799,6 @@ footer {
 
     .work-info {
         padding: 12px;
-    }
-
-    .work-title {
-        font-size: 0.9rem;
     }
 
     .work-category {
@@ -737,11 +843,6 @@ footer {
         font-size: 1rem;
     }
 
-    footer {
-        padding: 20px;
-        font-size: 0.85rem;
-    }
-
     .lightbox-prev,
     .lightbox-next {
         width: 40px;
@@ -772,11 +873,33 @@ footer {
         white-space: normal;
         max-width: 90%;
     }
+
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+    }
+
+    .filter-btn {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+    
+    .filter-dropdown {
+        min-width: 200px;
+        max-height: 260px;
+    }
 }
 
 @media (max-width: 480px) {
     .container {
         padding: 0 15px;
+    }
+
+    body {
+        padding-top: 110px !important;
     }
 
     .logo {
@@ -789,10 +912,6 @@ footer {
 
     .nav-links a {
         font-size: 0.9rem;
-    }
-
-    .about-text h1 {
-        font-size: 1.8rem;
     }
 
     .photo-placeholder {
@@ -826,15 +945,6 @@ footer {
         font-size: 1.4rem;
     }
 
-    .portfolio-tabs {
-        gap: 8px;
-    }
-
-    .tab-btn {
-        font-size: 0.8rem;
-        padding: 5px 10px;
-    }
-
     .lightbox-prev,
     .lightbox-next {
         width: 36px;
@@ -842,68 +952,36 @@ footer {
         font-size: 20px;
     }
 }
-.photo-placeholder.with-avatar {
-    background-image: url('images/avatar.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-/* Скрываем иконку, если она есть */
-.photo-placeholder.with-avatar i {
-    display: none;
-}
 
 /* ============================================ */
-/* КНОПКА "НАВЕРХ" */
+/* КОМПЕНСАЦИЯ ДЛЯ ФИКСИРОВАННОГО МЕНЮ */
 /* ============================================ */
 
-.back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #e5a4ac;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
+/* Способ 1: scroll-padding-top (современный) */
+html {
+    scroll-padding-top: 45px;
+    scroll-behavior: smooth;
 }
 
-.back-to-top.show {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
+/* Способ 2: scroll-margin-top (запасной) */
+section, .filter-container, .form-container {
+    scroll-margin-top: 45px;
 }
 
-.back-to-top:hover {
-    background-color: #d48f9b;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-}
-
-.back-to-top:active {
-    transform: translateY(0);
-}
-
-/* Мобильная адаптация */
 @media (max-width: 768px) {
-    .back-to-top {
-        bottom: 20px;
-        right: 20px;
-        width: 44px;
-        height: 44px;
-        font-size: 20px;
+    html {
+        scroll-padding-top: 120px;
+    }
+    section, .filter-container, .form-container {
+        scroll-margin-top: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        scroll-padding-top: 120px;
+    }
+    section, .filter-container, .form-container {
+        scroll-margin-top: 120px;
     }
 }
